@@ -1,0 +1,22 @@
+{
+  "name": "security-ms",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/app.ts",
+    "build": "rimraf dist && tsc",
+    "start": "node dist/app.js"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.19.9",
+    "@hono/swagger-ui": "^0.5.3",
+    "@hono/zod-openapi": "^1.2.2",
+    "hono": "^4.12.3",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.17",
+    "rimraf": "^6.1.3",
+    "tsx": "^4.7.1",
+    "typescript": "^5.8.3"
+  }
+}

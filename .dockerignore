@@ -1,0 +1,45 @@
+# Dependencias
+node_modules
+.pnpm-store
+
+# Lock files
+package-lock.json
+yarn.lock
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Source files (comentado para dev, descomenta para prod si haces build local)
+# src/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode
+.idea
+
+# Git
+.git
+.gitignore
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# Testing
+coverage
+*.test.ts
+*.spec.ts
+
+# Config files for devs
+biome.json
+commitlint.config.js
+
+# Docs
+README.md
+version.md
