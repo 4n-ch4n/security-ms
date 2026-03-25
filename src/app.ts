@@ -1,5 +1,5 @@
 import { serve } from '@hono/node-server';
-import app from '@api/server';
+import app from 'presentation/server';
 import { envs } from '@config';
 
 serve(
@@ -11,10 +11,10 @@ serve(
   (info) => {
     console.log(`Server is running at http://${envs.hostname}:${info.port}`);
     console.log(
-      `API definition: http://${envs.hostname}:${info.port}${envs.openApiUrl}`
+      `API definition: http://${envs.hostname}:${info.port}${envs.openApiUrl}`,
     );
     console.log(
-      `Documentation: http://${envs.hostname}:${info.port}${envs.docsUrl}`
+      `Documentation: http://${envs.hostname}:${info.port}${envs.docsUrl}`,
     );
   },
 );
