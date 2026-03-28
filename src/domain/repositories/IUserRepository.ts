@@ -6,7 +6,7 @@ export interface IUserRepository {
   getUserById(id: string): Promise<User | null>;
   getUserByEmail(email: string): Promise<User | null>;
   getUsersByOrganization(
-    id: string,
+    organizationId: string,
     pagination: PaginationQuery,
   ): Promise<PaginatedResult<User>>;
   createUser(user: User, connection?: PoolConnection): Promise<void>;

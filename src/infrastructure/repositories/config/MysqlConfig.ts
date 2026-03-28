@@ -1,14 +1,15 @@
-import { envs } from '@config';
 import { createPool, Pool } from 'mysql2/promise';
+import { envs } from '@config';
 
 export interface IMysql {
   mysqlDb: Pool;
 }
 
 export class MysqlConfig implements IMysql {
+  private static instance: MysqlConfig;
   private db: Pool;
 
-  constructor(private environments: typeof envs) {
+  private constructor(private environments: typeof envs) {
     this.db = createPool({
       host: this.environments.mysql.host,
       port: this.environments.mysql.port,
@@ -18,6 +19,13 @@ export class MysqlConfig implements IMysql {
       waitForConnections: true,
       connectionLimit: 10,
     });
+  }
+
+  public static getInstance(environments: typeof envs): MysqlConfig {
+    if (!MysqlConfig.instance) {
+      MysqlConfig.instance = new MysqlConfig(environments);
+    }
+    return MysqlConfig.instance;
   }
 
   public get mysqlDb(): Pool {

@@ -18,5 +18,4 @@ export interface IUserOrganizationRepository {
     roleId: string,
     connection?: PoolConnection,
   ): Promise<void>;
-  deleteUserRoles(userId: string, connection?: PoolConnection): Promise<void>;
 }
