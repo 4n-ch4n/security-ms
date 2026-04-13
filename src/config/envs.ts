@@ -1,5 +1,5 @@
 export const envs = {
-  secretJwt: process.env.SECRET_JWT || '',
+  secretJwt: process.env.JWT_SECRET || '',
   port: Number(process.env.PORT) || 3000,
   hostname: process.env.HOSTNAME ?? 'localhost',
   baseUrl: process.env.API_BASE_URL ?? '/api',

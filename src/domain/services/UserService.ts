@@ -37,6 +37,14 @@ export class UserService {
       );
     }
 
+    if (!user.isActive) {
+      throw new ApiErrorResponse(
+        StatusCode.FORBIDDEN,
+        ErrorCode.FORBIDDEN,
+        'User account is inactive talk to your administrator',
+      );
+    }
+
     const match = await compare(password, user.password!);
     if (!match) {
       throw new ApiErrorResponse(
@@ -54,7 +62,7 @@ export class UserService {
         userId: user.id,
         email: user.email,
         type: 'identity',
-        exp: Math.floor(Date.now() / 1000) + 10 * 60, // 10 minutes
+        exp: Math.floor(Date.now() / 1000) + 60 * 60, // 1 hour
       },
       this.environments.secretJwt,
       'HS256',
@@ -116,7 +124,7 @@ export class UserService {
   }
 
   async signUp(user: User) {
-    user.isActive = false;
+    user.isActive = true;
     user.password = await hash(user.password!, 5); // Non-null assertion
     if (await this.validateUserEmail(user.email!)) {
       throw new ApiErrorResponse(
@@ -128,6 +136,7 @@ export class UserService {
 
     await this.userRepository.createUser(user);
 
+    user.setPasswordEmpty();
     return user;
   }
 

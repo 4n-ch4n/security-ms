@@ -5,5 +5,5 @@ export interface UserOrganization {
   userId: string;
   companyId: string;
   role: Role;
-  joinedAt: Date | string;
+  joinedAt: Date | string | null;
 }

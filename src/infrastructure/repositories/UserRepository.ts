@@ -56,7 +56,7 @@ export class UserRepository implements IUserRepository {
   }
 
   async getUsersByOrganization(
-    organizationId: string,
+    companyId: string,
     pagination: PaginationQuery,
   ): Promise<PaginatedResult<User>> {
     const query = new QueryBuilder(this.mysqlEntity)
@@ -78,7 +78,7 @@ export class UserRepository implements IUserRepository {
       .build();
 
     const [rows] = await this.db.mysqlDb.execute<RowDataPacket[]>(query, [
-      organizationId,
+      companyId,
     ]);
 
     const users = UserMapper.mapUserModelToEntity(rows);
@@ -96,7 +96,7 @@ export class UserRepository implements IUserRepository {
 
     const [totalRows] = await this.db.mysqlDb.execute<RowDataPacket[]>(
       totalRowsQuery,
-      [organizationId],
+      [companyId],
     );
 
     return {
@@ -130,6 +130,6 @@ export class UserRepository implements IUserRepository {
   async deleteUser(id: string, connection?: PoolConnection): Promise<void> {
     const db = connection || this.db.mysqlDb;
 
-    await db.query(`DELETE FROM ${this.mysqlEntity} WHERE id = ?`, [id]);
+    await db.query(`UPDATE ${this.mysqlEntity} SET is_active = false WHERE id = ?`, [id]);
   }
 }

@@ -99,15 +99,27 @@ export class UserOrganizationService {
     return token;
   }
 
-  async acceptInvitation(userId: string, token: string): Promise<void> {
+  async acceptInvitation(
+    userId: string,
+    userEmail: string,
+    token: string,
+  ): Promise<UserOrganization> {
     try {
       const payload = await verify(token, this.environments.secretJwt, 'HS256');
 
-      const { companyId, roleId } = payload as {
+      const { companyId, roleId, email } = payload as {
         companyId: string;
         roleId: string;
         email: string;
       };
+
+      if (email !== userEmail) {
+        throw new ApiErrorResponse(
+          StatusCode.BAD_REQUEST,
+          ErrorCode.OPERATION_NOT_ALLOWED,
+          'This invitation was sent to a different email address',
+        );
+      }
 
       const userOrganization: UserOrganization = {
         id: crypto.randomUUID(),
@@ -117,7 +129,7 @@ export class UserOrganizationService {
         joinedAt: new Date(),
       };
 
-      await this.joinOrganization(userOrganization);
+      return await this.joinOrganization(userOrganization);
     } catch (error) {
       throw new ApiErrorResponse(
         StatusCode.BAD_REQUEST,

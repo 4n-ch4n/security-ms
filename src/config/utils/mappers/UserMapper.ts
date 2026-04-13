@@ -14,6 +14,7 @@ export class UserMapper {
       email: dto.email ?? null,
       password: dto.password ?? null,
       isActive: dto.isActive ?? null,
+      phone: dto.phone ?? null,
     });
     if (dto.currentPassword) user.currentPassword = dto.currentPassword;
 
@@ -50,7 +51,7 @@ export class UserMapper {
 
       if (row.user_org_ids) {
         const uniqueOrgs = new Set<string>();
-      
+
         const ids: string[] = row.user_org_ids.split(',');
         const companies: string[] = row.companies_ids.split(',');
         const joinedAts: (string | Date)[] = row.joined_ats.split(',');

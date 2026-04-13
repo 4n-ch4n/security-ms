@@ -5,5 +5,6 @@ export interface IUserDTO {
     email?: string;
     password?: string;
     currentPassword?: string;
+    phone?: string;
     isActive?: boolean;
 }

@@ -9,7 +9,6 @@
     "outDir": "./dist",
     "baseUrl": "src",
     "paths": {
-      "@api/*": ["api/*"],
       "@application/*": ["application/*"],
       "@domain/*": ["domain/*"],
       "@infrastructure/*": ["infrastructure/*"],

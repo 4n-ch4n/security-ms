@@ -5,6 +5,9 @@ import { cors } from 'hono/cors';
 import { jwt } from 'hono/jwt';
 import { envs } from '@config';
 import rootRoutes from './_root/index';
+import usersRoutes from './users/index';
+import rolesRoutes from './roles/index';
+import organizationsRoutes from './organizations/index';
 
 const app = new OpenAPIHono();
 
@@ -41,6 +44,8 @@ app.get(
 app.get(`${envs.docsUrl}/`, (c) => c.redirect(envs.docsUrl));
 app.get('/', (c) => c.redirect(envs.docsUrl));
 
+app.route(envs.baseUrl, usersRoutes);
+
 app.use(
   `${envs.baseUrl}/*`,
   jwt({
@@ -48,5 +53,8 @@ app.use(
     alg: 'HS256',
   }),
 );
+
+app.route(envs.baseUrl, rolesRoutes);
+app.route(envs.baseUrl, organizationsRoutes);
 
 export default app;
