@@ -10,6 +10,7 @@ import {
 import { createRoute, RouteHandler } from '@hono/zod-openapi';
 import { JwtVariables } from 'hono/jwt';
 import { z } from 'zod';
+import { requirePermission } from '../middlewares';
 
 const RequestBodySchema = z.object({
   roleId: z.string().openapi({
@@ -30,6 +31,7 @@ const route = createRoute({
   description:
     'Allows an organization owner to generate an invitation token that can be sent to a user to join the organization with a specific role.',
   tags: ['Organization'],
+  middleware: [requirePermission('user:create')],
   request: {
     body: {
       content: {
@@ -48,7 +50,7 @@ const route = createRoute({
             z.object({
               invitationToken: z.string().openapi({
                 example:
-                  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJyb2xlSWQiOiIyIiwiaWF0IjoxNjg4ODQyODAwfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
+                  'token1234567890abcdefg',
                 description: 'The generated invitation token.',
               }),
             }),

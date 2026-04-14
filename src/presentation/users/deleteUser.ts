@@ -7,6 +7,7 @@ import {
 } from '@config/schemas/response';
 import { createRoute, RouteHandler } from '@hono/zod-openapi';
 import { JwtVariables } from 'hono/jwt';
+import { requirePermission } from '../middlewares';
 
 const route = createRoute({
   method: 'delete',
@@ -14,6 +15,7 @@ const route = createRoute({
   summary: 'Delete user by ID',
   description: 'Deletes a user by their unique identifier.',
   tags: ['User'],
+  middleware: [requirePermission('user:delete')],
   responses: {
     204: {
       description: 'User deleted successfully',

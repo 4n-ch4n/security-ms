@@ -11,6 +11,7 @@ import {
   StatusCode,
   SuccessResponseSchema,
 } from '@config/schemas/response';
+import { requirePermission } from '../middlewares';
 
 const RequestBodySchema = z.object({
   userId: z.uuid().openapi({
@@ -35,6 +36,7 @@ const route = createRoute({
   description:
     'Allows an organization owner to update the role of a user within the organization.',
   tags: ['Organization'],
+  middleware: [requirePermission('user:edit')],
   request: {
     body: {
       content: {
